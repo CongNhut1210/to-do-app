@@ -1,10 +1,17 @@
+
 @extends('layouts.app')
-@section('title','Create Task')
+@section('title', 'Create Task')
 @section('content')
+
     <form action="" method="POST">
-        @csrf //
+        @csrf
         <label for="title">Title</label>
         <input type="text" name="title" id="title">
-        <button type="submit">Submit</button>
+        <label for="description">Description</label>
+        <input type="text" name="description" id="description">
+        <label for="long_description">Long Description</label>
+        <input type="text" name="long_description" id="long_description">
+        <button type="submit">Create</button>
     </form>
+
 @endsection

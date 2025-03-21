@@ -13,6 +13,6 @@ Route::get('/tasks/{id}', function($id) {
     return view('detail',['task'=>$task]);
 })->name('tasks.detail');
 
-// Route::get('/about', function(){
-//     return view('index',['name' => 'About']);
-// });
+Route::get('task/create',function(){
+    return view(('create'));
+})->name('task.create');
