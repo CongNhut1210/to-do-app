@@ -1,18 +1,40 @@
+
 <?php
 
 use App\Models\Task;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function() {
-    $tasks= Task::latest('title')->get();
+    $tasks= Task::latest('id')->get();
     return view('index',['tasks'=>$tasks]);
-});
+})->name('tasks.index');
+
+Route::get('tasks/create', function(){
+    return view('create');
+})->name('tasks.create');
 
 Route::get('/tasks/{id}', function($id) {
-    $task= Task::findOrFail($id);
+    $task = Task::findOrFail($id);
     return view('detail',['task'=>$task]);
 })->name('tasks.detail');
 
-Route::get('task/create',function(){
-    return view(('create'));
-})->name('task.create');
+Route::post('tasks/', function(Request $request){
+    // dd($request->all());
+    $data= $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required|min:3|max:255',
+        'long_description' => 'required|min:3|max:255',
+    ]);
+    $task = new Task();
+    $task->title = $request->$data['title'];
+    $task->description = $request->$data['description'];
+    $task->long_description = $request->$data['long_description'];
+    $task->completed = false;
+    $task->save();
+    return redirect()->route('tasks.index');
+})->name('tasks.create');
+
+// Route::get('/about', function(){
+//     return view('index',['name' => 'About']);
+// });
