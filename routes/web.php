@@ -27,12 +27,12 @@ Route::post('tasks/', function(Request $request){
         'long_description' => 'required|min:3|max:255',
     ]);
     $task = new Task();
-    $task->title = $request->$data['title'];
-    $task->description = $request->$data['description'];
-    $task->long_description = $request->$data['long_description'];
+    $task->title = $data['title'];
+    $task->description = $data['description'];
+    $task->long_description = $data['long_description'];
     $task->completed = false;
     $task->save();
-    return redirect()->route('tasks.index');
+    return redirect()->route('tasks.index')->with('sucecss','Task created sucessfully');
 })->name('tasks.create');
 
 // Route::get('/about', function(){
