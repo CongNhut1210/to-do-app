@@ -1,4 +1,3 @@
-
 <?php
 
 use App\Models\Task;
@@ -20,20 +19,47 @@ Route::get('/tasks/{id}', function($id) {
 })->name('tasks.detail');
 
 Route::post('tasks/', function(Request $request){
-    // dd($request->all());
-    $data= $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required|min:3|max:255',
-        'long_description' => 'required|min:3|max:255',
+
+    // $data = $request->validate([
+    //     'title'=>'required|max:255',
+    //     'description'=>'required|min:3|max:255',
+    //     'long_description'=>'required|min:3|max:255',
+    // ]);
+    // $task = new Task();
+    // $task->title = $data['title'];
+    // $task->description = $data['description'];
+    // $task->long_description = $data['long_description'];
+    // $task->completed = false; //set default value = false
+    // $task->save();
+    $task = Task::created($request->validate());
+    return redirect()->route('tasks.index')->with('success', "Task created succesfully");
+})->name('tasks.store');
+
+Route::get('tasks/{id}/edit',function($id){
+    $task = Task::findOrFail($id);
+    return view('edit', ['task'=>$task]);
+})->name('tasks.edit');
+
+Route::put('tasks/{id}', function($id,Request $request){
+    $data = $request->validate([
+        'title'=> 'required|max:255',
+        'description'=> 'required|min:3|max:255',
+        'long_description'=> 'required|min:3|max:255',
     ]);
-    $task = new Task();
+    $task = Task::findOrFail($id);
     $task->title = $data['title'];
     $task->description = $data['description'];
     $task->long_description = $data['long_description'];
-    $task->completed = false;
+    $task->completed = false; //set default value = false
     $task->save();
-    return redirect()->route('tasks.index')->with('sucecss','Task created sucessfully');
-})->name('tasks.create');
+    return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+})->name('tasks.update');
+
+Route::delete('tasks/{id}/delete',function($id){
+    $task = Task::findOrFail($id);
+    $task->delete();
+    return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
+})->name('tasks.delete');
 
 // Route::get('/about', function(){
 //     return view('index',['name' => 'About']);

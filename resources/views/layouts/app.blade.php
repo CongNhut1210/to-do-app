@@ -8,7 +8,7 @@
     <style>
         @yield('style');
         .alert-success{
-            color:green
+            color:green;
         }
     </style>
 </head>
