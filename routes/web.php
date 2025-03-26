@@ -41,17 +41,7 @@ Route::get('tasks/{id}/edit',function($id){
 })->name('tasks.edit');
 
 Route::put('tasks/{id}', function($id,Request $request){
-    $data = $request->validate([
-        'title'=> 'required|max:255',
-        'description'=> 'required|min:3|max:255',
-        'long_description'=> 'required|min:3|max:255',
-    ]);
-    $task = Task::findOrFail($id);
-    $task->title = $data['title'];
-    $task->description = $data['description'];
-    $task->long_description = $data['long_description'];
-    $task->completed = false; //set default value = false
-    $task->save();
+Task::findOrFail($id)->update($request->validate());
     return redirect()->route('tasks.index')->with('success', 'Task updated successfully');
 })->name('tasks.update');
 
