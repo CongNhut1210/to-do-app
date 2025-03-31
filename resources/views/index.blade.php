@@ -5,7 +5,9 @@
         <a class="font-medium text-gray-700 underline decoration-blue-500 "
          href="{{ route('tasks.create')}}">+ Create Task</a>
     </div>
-    <table class='"border-separate border-spacing-2 border border-gray-400 dark:border-gray-500"'>
+    <table class=
+
+    '"border-separate border-spacing-2 border border-gray-400 dark:border-gray-500"'>
 
         <tr>
             <th>ID</th>
